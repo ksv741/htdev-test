@@ -47,6 +47,7 @@ module.exports = (): Configuration => {
     },
     devtool: !isProd ? 'inline-source-map' : false,
     output: {
+      publicPath: '/',
       path: withPath('build'),
       filename: 'bundle-[fullhash].js',
       clean: true,
@@ -74,6 +75,7 @@ module.exports = (): Configuration => {
       watchFiles: withPath('./src'),
       compress: isProd,
       historyApiFallback: true
+
     },
   }
 };

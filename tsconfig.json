@@ -23,7 +23,8 @@
       "components/*": ["./src/components/*"],
       "pages/*": ["./src/pages/*"],
       "store/*": ["./src/store/*"],
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "routes/*": ["./src/routes/*"]
     }
   },
   "exclude": ["node_modules"],

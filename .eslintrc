@@ -28,6 +28,8 @@
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/quotes": "warn",
     "@typescript-eslint/no-unused-expressions": "off",
+    "@typescript-eslint/object-curly-spacing": "off",
+    "@typescript-eslint/default-param-last": "off",
     "arrow-parens": "off",
     "class-methods-use-this": "off",
     "func-names": "off",
@@ -42,7 +44,10 @@
     "no-restricted-globals": "off",
     "object-curly-newline": "off",
     "prefer-destructuring": "off",
-    "react/jsx-tag-spacing": "off"
+    "react/jsx-tag-spacing": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "jsx-quotes": ["warn", "prefer-single"]
   },
   "env": {
     "browser": true,
