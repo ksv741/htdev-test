@@ -6,8 +6,17 @@ const initialState: PostStateType = {
   timeZoneList: null,
   timeZoneCurrent: getFromLS('currentTimeZone') || '',
   timeZoneIsLoading: false,
+  timeZoneListError: '',
+  timeZoneObject: {},
+
   signValue: getFromLS('currentSignValue') || '',
   signError: getFromLS('currentSignError') || false,
+  textValue: '',
+
+  createPostLoading: false,
+  createPostError: '',
+
+  posts: getFromLS('posts') || [],
 };
 
 export default function PostReducer(state: PostStateType = initialState, action: PostActionType): PostStateType {
@@ -26,11 +35,26 @@ export default function PostReducer(state: PostStateType = initialState, action:
     case PostActionEnum.SET_TIMEZONE_LIST_ERROR:
       return {...state, timeZoneListError: action.payload, timeZoneIsLoading: false};
 
+    case PostActionEnum.SET_TIMEZONE_OBJECT:
+      return {...state, timeZoneObject: action.payload, timeZoneIsLoading: false};
+
     case PostActionEnum.SET_SIGN_VALUE:
       return {...state, signValue: action.payload};
 
     case PostActionEnum.SET_SIGN_ERROR:
       return {...state, signError: action.payload};
+
+    case PostActionEnum.SET_TEXT_VALUE:
+      return {...state, textValue: action.payload};
+
+    case PostActionEnum.CREATE_POST_LOADING:
+      return {...state, createPostLoading: action.payload};
+
+    case PostActionEnum.CREATE_POST_ERROR:
+      return {...state, createPostError: action.payload};
+
+    case PostActionEnum.ADD_POST_TO_STORE:
+      return {...state, posts: [...state.posts, action.payload]};
 
     default:
       return state;

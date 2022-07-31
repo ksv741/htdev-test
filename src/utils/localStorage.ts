@@ -1,4 +1,4 @@
-export function setToLS(key: string, value: any) {
+export function saveToLS(key: string, value: any) {
   if (!key || value == null) return;
 
   const state = getFromLS('') || {};

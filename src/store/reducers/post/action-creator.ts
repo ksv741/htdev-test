@@ -1,13 +1,20 @@
-import { getTimeZoneListFromApi } from 'src/api/timezones';
+import { savePostToLS } from 'src/api/clientStorage';
+import { getTimeZoneListFromApi, getTimeZoneObject } from 'src/api/timezones';
 import { AppDispatch } from 'src/store';
 import {
-  PostActionEnum,
+  AddPostToStore,
+  CreatePostError,
+  CreatePostLoading,
+  PostActionEnum, PostInStoreType,
+  PostType,
   SetCurrentTimeZone,
   SetIsTimeZoneListLoadingAction,
   SetSignError,
   SetSignValue,
+  SetTextValue,
   SetTimeZoneListAction,
   SetTimeZoneLostError,
+  SetTimeZoneObject, TimeZoneObject,
 } from 'store/reducers/post/types';
 
 export const PostActions = {
@@ -46,6 +53,28 @@ export const PostActions = {
       payload: error,
     };
   },
+  getTimeZoneObject: (timeZone: string) => {
+    return (dispatch: AppDispatch): Promise<TimeZoneObject> => {
+      return new Promise((res, rej) => {
+        try {
+          dispatch(PostActions.setTimeZoneListLoading(true));
+          getTimeZoneObject(timeZone).then(data => {
+            dispatch(PostActions.setTimeZoneObject(data));
+            res(data);
+          });
+        } catch (e) {
+          dispatch(PostActions.setTimeZoneListError(e.message));
+          rej(e);
+        }
+      });
+    };
+  },
+  setTimeZoneObject: (zoneObject: TimeZoneObject): SetTimeZoneObject => {
+    return {
+      type: PostActionEnum.SET_TIMEZONE_OBJECT,
+      payload: zoneObject,
+    };
+  },
 
   setSignValue(value: string): SetSignValue {
     return {
@@ -57,6 +86,52 @@ export const PostActions = {
     return {
       type: PostActionEnum.SET_SIGN_ERROR,
       payload: value,
+    };
+  },
+
+  setTextValue(value: string): SetTextValue {
+    return {
+      type: PostActionEnum.SET_TEXT_VALUE,
+      payload: value,
+    };
+  },
+
+  createPostLoading: (value: boolean): CreatePostLoading => {
+    return {
+      type: PostActionEnum.CREATE_POST_LOADING,
+      payload: value,
+    };
+  },
+  createPostError: (value: string): CreatePostError => {
+    return {
+      type: PostActionEnum.CREATE_POST_ERROR,
+      payload: value,
+    };
+  },
+  createPost: (post: PostType) => {
+    return async (dispatch: AppDispatch) => {
+      try {
+        dispatch(PostActions.createPostLoading(true));
+
+        // @ts-ignore
+        const date = await (dispatch(PostActions.getTimeZoneObject(post.tz)) as Promise<TimeZoneObject>);
+        const {id: newPostId} = await savePostToLS({...post, date: {[post.tz]: date}});
+
+        dispatch(PostActions.addPostToStore({...post, date: {[post.tz]: date}, id: newPostId}));
+        dispatch(PostActions.setTextValue(''));
+      } catch (e) {
+        dispatch(PostActions.createPostError(e.message));
+      } finally {
+        dispatch(PostActions.createPostLoading(false));
+        dispatch(PostActions.setTimeZoneListLoading(false));
+      }
+    };
+  },
+
+  addPostToStore: (post: PostInStoreType): AddPostToStore => {
+    return {
+      type: PostActionEnum.ADD_POST_TO_STORE,
+      payload: post,
     };
   },
 };

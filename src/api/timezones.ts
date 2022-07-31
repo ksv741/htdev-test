@@ -1,18 +1,18 @@
+import { TimeZoneObject } from 'store/reducers/post/types';
+
 export const getTimeZoneListFromApi = new Promise<string[]>((res, rej) => {
   try {
-    setTimeout(() => {
-      fetch('https://worldtimeapi.org/api/timezone')
-        .then(result => result.json())
-        .then(data => res(data))
-        .catch(() => rej(new Error('Error get timezone')));
-    }, 2000);
+    fetch('https://worldtimeapi.org/api/timezone')
+      .then(result => result.json())
+      .then(data => res(data))
+      .catch(() => rej(new Error('Error get timezone')));
   } catch (e) {
     rej(e);
   }
 });
 
-export const getTimeZoneObject = (timezone: string) => {
-  return new Promise((res, rej) => {
+export const getTimeZoneObject = (timezone: string): Promise<TimeZoneObject> => {
+  return new Promise<TimeZoneObject>((res, rej) => {
     if (!timezone) rej(new Error('Not choose timezone'));
 
     try {

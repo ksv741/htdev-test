@@ -11,6 +11,7 @@ const SignatureInput = () => {
   const {setSignValue, setSignError} = useActions();
 
   const postSignatureChangeHandler = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // TODO create hook with debounce
     setSignValue(event.target.value);
   };
 
@@ -27,7 +28,7 @@ const SignatureInput = () => {
       setIsValueValid(checkValue());
       setSignValue(signValue);
       setDebounceTimeout(timeout);
-    }, 500);
+    }, 200);
 
     return () => clearTimeout(timeout);
   }, [signValue]);
@@ -45,7 +46,7 @@ const SignatureInput = () => {
       variant='outlined'
       fullWidth
       multiline
-      maxRows={4}
+      maxRows={1}
       value={signValue}
       onChange={postSignatureChangeHandler}
       helperText={signError && 'Значение не должно превышать 100 символов'}

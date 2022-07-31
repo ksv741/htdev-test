@@ -37,7 +37,7 @@ const TimeZoneSelect: React.FC<TimeZoneSelectProps> = ({zones}) => {
       <Select
         variant='outlined'
         labelId='select-timezone'
-        value={timeZoneCurrent}
+        value={zones ? timeZoneCurrent : ''}
         onChange={handleChange}
         MenuProps={{style: {maxHeight: 400}}}
       >
