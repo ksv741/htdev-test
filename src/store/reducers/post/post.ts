@@ -1,12 +1,16 @@
+import { clientStorage } from 'src/api/clientStorage';
+import { getFromLS, setToLS } from 'src/utils/localStorage';
 import { PostActionEnum, PostActionType, PostStateType } from 'store/reducers/post/types';
 
 const initialState: PostStateType = {
   timeZoneList: null,
-  currentTimeZone: '',
+  currentTimeZone: getFromLS('currentTimeZone') || '',
   isTimeZoneListLoading: false,
 };
 
 export default function PostReducer(state: PostStateType = initialState, action: PostActionType): PostStateType {
+  clientStorage(action);
+
   switch (action.type) {
     case PostActionEnum.SET_TIMEZONE_LIST:
       return {...state, timeZoneList: action.payload, isTimeZoneListLoading: false, timeZoneListError: ''};
