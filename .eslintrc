@@ -47,6 +47,9 @@
     "react/jsx-tag-spacing": "off",
     "react/function-component-definition": "off",
     "react/jsx-one-expression-per-line": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "arrow-body-style": "off",
     "jsx-quotes": ["warn", "prefer-single"]
   },
   "env": {
