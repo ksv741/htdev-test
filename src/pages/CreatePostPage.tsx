@@ -1,20 +1,16 @@
 import SendIcon from '@mui/icons-material/Send';
-import { Button, FormHelperText, Grid, TextField } from '@mui/material';
-import TimeZoneSelect from 'components/TimeZoneSelect/TimeZoneSelect';
+import { Button, Grid, TextField } from '@mui/material';
+import SignatureInput from 'components/PostTabLayout/SignatureInput/SignatureInput';
+import TimeZoneSelect from 'components/PostTabLayout/TimeZoneSelect/TimeZoneSelect';
 import React from 'react';
 import { useTypedSelector } from 'src/store';
 
 const CreatePostPage: React.FC = () => {
   const [postText, setPostText] = React.useState('');
-  const [postSignature, setPostSignature] = React.useState('');
   const timeZoneList = useTypedSelector(state => state.post.timeZoneList);
 
   const postTextChangeHandler = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     setPostText(event.target.value);
-  };
-
-  const postSignatureChangeHandler = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    setPostSignature(event.target.value);
   };
 
   return (
@@ -33,16 +29,7 @@ const CreatePostPage: React.FC = () => {
 
       <Grid container item xs={12} sx={{alignItems: 'flex-start'}}>
         <Grid item xs={6}>
-          <TextField
-            label='Подпись'
-            variant='outlined'
-            fullWidth
-            multiline
-            maxRows={4}
-            value={postSignature}
-            onChange={postSignatureChangeHandler}
-          />
-          <FormHelperText/>
+          <SignatureInput/>
         </Grid>
         <Grid item xs={6}>
           <TimeZoneSelect zones={timeZoneList}/>

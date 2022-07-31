@@ -7,13 +7,13 @@ interface TimeZoneSelectProps {
 }
 
 const TimeZoneSelect: React.FC<TimeZoneSelectProps> = ({zones}) => {
-  const {currentTimeZone, isTimeZoneListLoading, timeZoneListError} = useTypedSelector(state => state.post);
+  const {timeZoneCurrent, timeZoneIsLoading, timeZoneListError} = useTypedSelector(state => state.post);
   const {setCurrentTimeZone} = useActions();
 
   const handleChange = (event: SelectChangeEvent) => setCurrentTimeZone(event.target.value);
 
   function renderLoader() {
-    return isTimeZoneListLoading
+    return timeZoneIsLoading
       ? <MenuItem disabled>LOADING...</MenuItem>
       : null;
   }
@@ -37,7 +37,7 @@ const TimeZoneSelect: React.FC<TimeZoneSelectProps> = ({zones}) => {
       <Select
         variant='outlined'
         labelId='select-timezone'
-        value={currentTimeZone}
+        value={timeZoneCurrent}
         onChange={handleChange}
         MenuProps={{style: {maxHeight: 400}}}
       >

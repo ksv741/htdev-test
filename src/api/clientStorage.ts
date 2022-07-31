@@ -7,6 +7,14 @@ export function clientStorage(action: PostActionType) {
       setToLS('currentTimeZone', action.payload);
       break;
 
+    case PostActionEnum.SET_SIGN_VALUE:
+      setToLS('currentSignValue', action.payload);
+      break;
+
+    case PostActionEnum.SET_SIGN_ERROR:
+      setToLS('currentSignError', action.payload);
+      break;
+
     default: break;
   }
 }

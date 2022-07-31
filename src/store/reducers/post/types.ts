@@ -1,8 +1,11 @@
 export type PostStateType = {
   timeZoneList: string[] | null;
-  currentTimeZone: string;
-  isTimeZoneListLoading: boolean;
+  timeZoneCurrent: string;
+  timeZoneIsLoading: boolean;
   timeZoneListError?: string;
+
+  signValue: string;
+  signError: boolean;
 };
 
 export enum PostActionEnum {
@@ -10,6 +13,9 @@ export enum PostActionEnum {
   SET_CURRENT_TIMEZONE = 'SET_CURRENT_TIMEZONE',
   SET_IS_TIMEZONE_LIST_LOADING = 'SET_IS_TIMEZONE_LIST_LOADING',
   SET_TIMEZONE_LIST_ERROR = 'SET_TIMEZONE_LIST_ERROR',
+
+  SET_SIGN_VALUE = 'SET_SIGN_VALUE',
+  SET_SIGN_ERROR = 'SET_SIGN_ERROR',
 }
 
 export interface SetTimeZoneLostError {
@@ -32,8 +38,20 @@ export interface SetCurrentTimeZone {
   payload: string;
 }
 
+export interface SetSignValue {
+  type: PostActionEnum.SET_SIGN_VALUE;
+  payload: string;
+}
+
+export interface SetSignError {
+  type: PostActionEnum.SET_SIGN_ERROR;
+  payload: boolean;
+}
+
 export type PostActionType =
   SetTimeZoneListAction |
   SetIsTimeZoneListLoadingAction |
   SetCurrentTimeZone |
-  SetTimeZoneLostError;
+  SetTimeZoneLostError |
+  SetSignValue |
+  SetSignError;

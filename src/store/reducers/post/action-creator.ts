@@ -4,6 +4,8 @@ import {
   PostActionEnum,
   SetCurrentTimeZone,
   SetIsTimeZoneListLoadingAction,
+  SetSignError,
+  SetSignValue,
   SetTimeZoneListAction,
   SetTimeZoneLostError,
 } from 'store/reducers/post/types';
@@ -42,6 +44,19 @@ export const PostActions = {
     return {
       type: PostActionEnum.SET_TIMEZONE_LIST_ERROR,
       payload: error,
+    };
+  },
+
+  setSignValue(value: string): SetSignValue {
+    return {
+      type: PostActionEnum.SET_SIGN_VALUE,
+      payload: value,
+    };
+  },
+  setSignError(value: boolean): SetSignError {
+    return {
+      type: PostActionEnum.SET_SIGN_ERROR,
+      payload: value,
     };
   },
 };
