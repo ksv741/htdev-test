@@ -23,7 +23,7 @@ const CreatePostButton = () => {
   }, [text, signError, timeZoneListError]);
 
   useEffect(() => {
-    setCanCreate(isFormValid && !createPostLoading);
+    setCanCreate(!!text && !signError && !!tz && isFormValid && !createPostLoading && !timeZoneIsLoading);
   }, [isFormValid, createPostLoading]);
 
   const createPostHandler = () => {
