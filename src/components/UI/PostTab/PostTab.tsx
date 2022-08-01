@@ -17,6 +17,10 @@ interface PostTabProps {
 const PostTab: React.FC<PostTabProps> = ({children, titles, defaultActiveTab = 0}) => {
   const [value, setValue] = React.useState(defaultActiveTab);
 
+  useEffect(() => {
+    setValue(defaultActiveTab);
+  }, [defaultActiveTab]);
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };

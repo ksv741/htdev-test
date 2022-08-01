@@ -13,7 +13,7 @@ export type PostStateType = {
   createPostLoading: boolean;
   createPostError: string;
 
-  posts: Required<PostType>[];
+  posts: PostInStoreType[];
 };
 
 export type TimeZoneObject = {

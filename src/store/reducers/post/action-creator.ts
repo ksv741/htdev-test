@@ -102,7 +102,7 @@ export const PostActions = {
       payload: value,
     };
   },
-  createPostError: (value: string): CreatePostError => {
+  setCreatePostError: (value: string): CreatePostError => {
     return {
       type: PostActionEnum.CREATE_POST_ERROR,
       payload: value,
@@ -120,7 +120,7 @@ export const PostActions = {
         dispatch(PostActions.addPostToStore({...post, date: {[post.tz]: date}, id: newPostId}));
         dispatch(PostActions.setTextValue(''));
       } catch (e) {
-        dispatch(PostActions.createPostError(e.message));
+        dispatch(PostActions.setCreatePostError(e));
       } finally {
         dispatch(PostActions.createPostLoading(false));
         dispatch(PostActions.setTimeZoneListLoading(false));

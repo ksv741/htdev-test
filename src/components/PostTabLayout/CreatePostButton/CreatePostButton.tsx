@@ -14,12 +14,17 @@ const CreatePostButton = () => {
     createPostLoading,
   } = useTypedSelector(state => state.post);
   const [isFormValid, setIsFormValid] = useState(true);
+  const [canCreate, setCanCreate] = useState(false);
   const {createPost} = useActions();
 
   useEffect(() => {
     if (!signError && !timeZoneListError && !!text.trim() && !timeZoneIsLoading) setIsFormValid(true);
     else setIsFormValid(false);
   }, [text, signError, timeZoneListError]);
+
+  useEffect(() => {
+    setCanCreate(isFormValid && !createPostLoading);
+  }, [isFormValid, createPostLoading]);
 
   const createPostHandler = () => {
     createPost({
@@ -35,7 +40,7 @@ const CreatePostButton = () => {
       loadingPosition='end'
       endIcon={<SendIcon />}
       variant='contained'
-      disabled={!isFormValid || createPostLoading}
+      disabled={!canCreate}
       onClick={createPostHandler}
     >
       Создать

@@ -1,8 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
 import { getFromLS, saveToLS } from 'src/utils/localStorage';
+import { PaginationActionEnum, PaginationActionType } from 'store/reducers/pagintaion/types';
 import { PostActionEnum, PostActionType, PostType } from 'store/reducers/post/types';
+import { v4 as uuidv4 } from 'uuid';
 
-export function clientStorage(action: PostActionType) {
+export function clientStorage(action: PostActionType | PaginationActionType) {
   switch (action.type) {
     case PostActionEnum.SET_CURRENT_TIMEZONE:
       saveToLS('currentTimeZone', action.payload);
@@ -14,6 +15,10 @@ export function clientStorage(action: PostActionType) {
 
     case PostActionEnum.SET_SIGN_ERROR:
       saveToLS('currentSignError', action.payload);
+      break;
+
+    case PaginationActionEnum.POST_PER_PAGE:
+      saveToLS('postPerPage', action.payload);
       break;
 
     default: break;
@@ -35,7 +40,7 @@ export function savePostToLS(post: Required<PostType>) {
 
         saveToLS('posts', posts);
         res({id});
-      }, 2000);
+      }, 200);
     } catch (e) {
       rej(e);
     }

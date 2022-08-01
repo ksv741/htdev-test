@@ -1,7 +1,8 @@
 import PostTab, { PostTabTitleProps } from 'components/UI/PostTab/PostTab';
 import CreatePostPage from 'pages/CreatePostPage';
 import PostListPage from 'pages/PostListPage';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useActions } from 'src/store';
 
 const tabsHeaders: PostTabTitleProps[] = [
@@ -20,13 +21,20 @@ interface PostTabLayoutProps {
 
 const PostTabLayout: React.FC<PostTabLayoutProps> = ({defaultActiveTab = 0}) => {
   const {getTimeZones} = useActions();
+  const [activeTab, setActiveTab] = useState(defaultActiveTab);
+  const location = useLocation();
 
   useEffect(() => {
     getTimeZones();
   }, []);
 
+  useEffect(() => {
+    if (location.pathname.includes('/posts')) setActiveTab(PostTabLayoutPages.POSTS);
+    else setActiveTab(PostTabLayoutPages.CREATE);
+  }, [location]);
+
   return (
-    <PostTab titles={tabsHeaders} defaultActiveTab={defaultActiveTab}>
+    <PostTab titles={tabsHeaders} defaultActiveTab={activeTab}>
       <CreatePostPage/>
       <PostListPage/>
     </PostTab>
