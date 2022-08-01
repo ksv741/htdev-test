@@ -1,6 +1,6 @@
 import { getFromLS, saveToLS } from 'src/utils/localStorage';
 import { PaginationActionEnum, PaginationActionType } from 'store/reducers/pagintaion/types';
-import { PostActionEnum, PostActionType, PostType } from 'store/reducers/post/types';
+import { PostActionEnum, PostActionType, PostInStoreType, PostType } from 'store/reducers/post/types';
 import { v4 as uuidv4 } from 'uuid';
 
 export function clientStorage(action: PostActionType | PaginationActionType) {
@@ -21,6 +21,12 @@ export function clientStorage(action: PostActionType | PaginationActionType) {
       saveToLS('postPerPage', action.payload);
       break;
 
+    case PostActionEnum.REMOVE_POST: {
+      const posts: PostInStoreType[] = getFromLS('posts');
+      saveToLS('posts', posts.filter(post => post.id !== action.payload));
+      break;
+    }
+
     default: break;
   }
 }
@@ -40,7 +46,7 @@ export function savePostToLS(post: Required<PostType>) {
 
         saveToLS('posts', posts);
         res({id});
-      }, 200);
+      }, 2000);
     } catch (e) {
       rej(e);
     }

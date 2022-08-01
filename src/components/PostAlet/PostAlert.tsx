@@ -8,8 +8,8 @@ const PostAlert = () => {
   const [alertText, setAlertText] = useState('');
   const [alertType, setAlertType] = useState<AlertColor>('success');
 
-  const {setCreatePostError, setTimeZoneListError} = useActions();
-  const {timeZoneListError, createPostError, posts} = useTypedSelector(state => state.post);
+  const {setCreatePostError, setTimeZoneListError, removePostMessage: rpm} = useActions();
+  const {timeZoneListError, createPostError, posts, removePostMessage} = useTypedSelector(state => state.post);
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -20,6 +20,7 @@ const PostAlert = () => {
 
     createPostError && setCreatePostError('');
     timeZoneListError && setTimeZoneListError('');
+    removePostMessage && rpm('');
   };
 
   const setAlert = (state: boolean, text: string, type: AlertColor) => {
@@ -36,9 +37,14 @@ const PostAlert = () => {
     setAlert(true, 'Пост создан', 'success');
   }, [posts.length]);
 
+  // Position this useEffect hook is important, because it reset unnecessary alert
   useEffect(() => {
     setAlertState(false);
   }, []);
+
+  useEffect(() => {
+    removePostMessage && setAlert(true, removePostMessage, 'success');
+  }, [removePostMessage]);
 
   return (
     <Snackbar open={alertState} autoHideDuration={3000} onClose={handleClose}>

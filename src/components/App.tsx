@@ -1,3 +1,4 @@
+import PostAlert from 'components/PostAlet/PostAlert';
 import React from 'react';
 import 'components/App.scss';
 import { Provider } from 'react-redux';
@@ -10,6 +11,7 @@ const App: React.FC = function () {
     <Provider store={store}>
       <BrowserRouter>
         <Routes/>
+        <PostAlert/>
       </BrowserRouter>
     </Provider>
   );

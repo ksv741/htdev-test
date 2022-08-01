@@ -5,8 +5,11 @@ import {
   AddPostToStore,
   CreatePostError,
   CreatePostLoading,
-  PostActionEnum, PostInStoreType,
+  PostActionEnum,
+  PostInStoreType,
   PostType,
+  RemovePost,
+  RemovePostMessage,
   SetCurrentTimeZone,
   SetIsTimeZoneListLoadingAction,
   SetSignError,
@@ -14,7 +17,8 @@ import {
   SetTextValue,
   SetTimeZoneListAction,
   SetTimeZoneLostError,
-  SetTimeZoneObject, TimeZoneObject,
+  SetTimeZoneObject,
+  TimeZoneObject,
 } from 'store/reducers/post/types';
 
 export const PostActions = {
@@ -132,6 +136,19 @@ export const PostActions = {
     return {
       type: PostActionEnum.ADD_POST_TO_STORE,
       payload: post,
+    };
+  },
+
+  removePost: (id: string): RemovePost => {
+    return {
+      type: PostActionEnum.REMOVE_POST,
+      payload: id,
+    };
+  },
+  removePostMessage: (text: string): RemovePostMessage => {
+    return {
+      type: PostActionEnum.REMOVE_POST_MESSAGE,
+      payload: text,
     };
   },
 };

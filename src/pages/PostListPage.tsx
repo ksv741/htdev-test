@@ -34,7 +34,7 @@ const PostListPage: React.FC = () => {
 
     changeSearchParam('page', pageActive);
     changeSearchParam('perPage', postPerPage);
-  }, [pageActive, postPerPage]);
+  }, [pageActive, postPerPage, posts]);
 
   useEffect(() => {
     const pageFromQueryParams = searchParams.get('page');
@@ -118,14 +118,14 @@ const PostListPage: React.FC = () => {
       </Grid>
 
       <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Pagination page={pageActive} count={pageCount} showFirstButton showLastButton onChange={changePageHandler}/>
+        </Grid>
         {filteredPosts.map(post => (
           <Grid item xs={4} key={post.id} >
             <PostItem {...post}/>
           </Grid>
         ))}
-        <Grid item xs={12}>
-          <Pagination page={pageActive} count={pageCount} showFirstButton showLastButton onChange={changePageHandler}/>
-        </Grid>
       </Grid>
     </>
 

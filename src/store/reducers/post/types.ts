@@ -14,6 +14,7 @@ export type PostStateType = {
   createPostError: string;
 
   posts: PostInStoreType[];
+  removePostMessage: string;
 };
 
 export type TimeZoneObject = {
@@ -62,6 +63,9 @@ export enum PostActionEnum {
   CREATE_POST_ERROR = 'CREATE_POST_ERROR',
 
   ADD_POST_TO_STORE = 'ADD_POST_TO_STORE',
+
+  REMOVE_POST = 'REMOVE_POST',
+  REMOVE_POST_MESSAGE = 'REMOVE_POST_MESSAGE',
 }
 
 export interface SetTimeZoneLostError {
@@ -128,6 +132,16 @@ export interface AddPostToStore {
   payload: PostInStoreType;
 }
 
+export interface RemovePost {
+  type: PostActionEnum.REMOVE_POST;
+  payload: string;
+}
+
+export interface RemovePostMessage {
+  type: PostActionEnum.REMOVE_POST_MESSAGE;
+  payload: string;
+}
+
 export type PostActionType =
   SetTimeZoneListAction |
   SetIsTimeZoneListLoadingAction |
@@ -140,4 +154,6 @@ export type PostActionType =
   CreatePost |
   CreatePostLoading |
   CreatePostError |
-  AddPostToStore;
+  AddPostToStore |
+  RemovePost |
+  RemovePostMessage;

@@ -17,6 +17,7 @@ const initialState: PostStateType = {
   createPostError: '',
 
   posts: getFromLS('posts') || [],
+  removePostMessage: '',
 };
 
 export default function PostReducer(state: PostStateType = initialState, action: PostActionType): PostStateType {
@@ -55,6 +56,12 @@ export default function PostReducer(state: PostStateType = initialState, action:
 
     case PostActionEnum.ADD_POST_TO_STORE:
       return {...state, posts: [...state.posts, action.payload]};
+
+    case PostActionEnum.REMOVE_POST:
+      return {...state, posts: state.posts.filter(post => post.id !== action.payload)};
+
+    case PostActionEnum.REMOVE_POST_MESSAGE:
+      return {...state, removePostMessage: action.payload};
 
     default:
       return state;
