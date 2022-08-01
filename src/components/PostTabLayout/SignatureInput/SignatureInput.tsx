@@ -7,16 +7,24 @@ const SignatureInput = () => {
 
   const [isValueValid, setIsValueValid] = useState(true);
   const [isValueTouched, setIsValueTouched] = useState(false);
+  const [errorText, setErrorText] = useState('');
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
   const {setSignValue, setSignError} = useActions();
 
   const postSignatureChangeHandler = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // TODO create hook with debounce
     setSignValue(event.target.value);
+    setIsValueTouched(true);
   };
 
   const checkValue = useCallback(() => {
-    return signValue.trim().length <= 15;
+    const isEmptyValue = signValue.trim() === '';
+    const isLongerTanEnable = signValue.trim().length > 100;
+    if (isEmptyValue) {
+      setErrorText('Значение не может быть пустым');
+    }
+    if (isLongerTanEnable) setErrorText('Значение не должно превышать 100 символов');
+
+    return (isValueTouched && !isEmptyValue && !isLongerTanEnable);
   }, [signValue]);
 
   useEffect(() => {
@@ -24,18 +32,16 @@ const SignatureInput = () => {
       clearTimeout(debounceTimeout);
     }
     const timeout = setTimeout(() => {
-      setIsValueTouched(true);
       setIsValueValid(checkValue());
       setSignValue(signValue);
       setDebounceTimeout(timeout);
-    }, 200);
+    }, 20);
 
     return () => clearTimeout(timeout);
   }, [signValue]);
 
   useEffect(() => {
     const error = isValueTouched && !isValueValid;
-    setSignError(error);
     setSignError(error);
   }, [isValueValid]);
 
@@ -49,7 +55,7 @@ const SignatureInput = () => {
       maxRows={1}
       value={signValue}
       onChange={postSignatureChangeHandler}
-      helperText={signError && 'Значение не должно превышать 100 символов'}
+      helperText={signError && errorText}
     />
   );
 };

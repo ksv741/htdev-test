@@ -18,13 +18,19 @@ const CreatePostButton = () => {
   const {createPost} = useActions();
 
   useEffect(() => {
-    if (!signError && !timeZoneListError && !!text.trim() && !timeZoneIsLoading) setIsFormValid(true);
+    if (!signError && !timeZoneListError && (sign.trim() !== '') && (text.trim() !== '') && !timeZoneIsLoading && tz) setIsFormValid(true);
     else setIsFormValid(false);
-  }, [text, signError, timeZoneListError]);
+  }, [signError, timeZoneListError, sign, text, timeZoneIsLoading, tz]);
 
   useEffect(() => {
-    setCanCreate(!!text && !signError && !!tz && isFormValid && !createPostLoading && !timeZoneIsLoading);
-  }, [isFormValid, createPostLoading]);
+    setCanCreate(isFormValid && !createPostLoading && !timeZoneIsLoading);
+  }, [text,
+    signError,
+    tz,
+    isFormValid,
+    createPostLoading,
+    timeZoneIsLoading,
+  ]);
 
   const createPostHandler = () => {
     createPost({

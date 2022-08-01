@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development PORT=8080 webpack serve --mode=development"
+    "dev": "cross-env NODE_ENV=development PORT=8080 webpack serve",
+    "build": "cross-env NODE_ENV=production webpack --mode=production",
+    "start": "cross-env NODE_ENV=production PORT=80 webpack serve"
   },
   "author": "",
   "license": "ISC",

@@ -47,7 +47,7 @@ module.exports = (): Configuration => {
     },
     devtool: !isProd ? 'inline-source-map' : false,
     output: {
-      publicPath: '/',
+      publicPath: './',
       path: withPath('build'),
       filename: 'bundle-[fullhash].js',
       clean: true,
